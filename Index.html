@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--bg2:#171923;--bg3:#1e2433;--bg4:#252d40;
+  --bdr:#2d3748;--bdr2:#3d4f6e;
+  --txt:#e2e8f0;--txt2:#94a3b8;--txt3:#64748b;
+  --grn:#10b981;--grn2:#065f46;
+  --blu:#3b82f6;--blu2:#1e3a8a;
+  --org:#f59e0b;--org2:#78350f;
+  --red:#ef4444;--red2:#7f1d1d;
+  --pur:#8b5cf6;--pur2:#4c1d95;
+  --acc:#22d3ee;
+}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--txt);font-size:13px;min-height:100vh}
+/* NAV */
+.nav{background:var(--bg2);border-bottom:1px solid var(--bdr);display:flex;overflow-x:auto;position:sticky;top:0;z-index:10}
+.nt{padding:11px 14px;font-size:12px;font-weight:500;color:var(--txt3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;user-select:none}
+.nt:hover{color:var(--txt2)}.nt.on{color:var(--acc);border-bottom-color:var(--acc)}
+/* TOOLBAR */
+.toolbar{background:var(--bg3);border-bottom:1px solid var(--bdr);padding:7px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tb-sep{width:1px;height:22px;background:var(--bdr);margin:0 2px}
+.tb-btn{font-family:inherit;font-size:11px;padding:4px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--bdr2);background:var(--bg4);color:var(--txt2);transition:all .15s;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.tb-btn:hover{border-color:var(--acc);color:var(--txt);background:var(--bg3)}
+.tb-btn.pri{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:700}
+.tb-btn.pri:hover{opacity:.88}
+.tb-label{font-size:10px;color:var(--txt3);padding:0 4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+/* PANELS */
+.pnl{display:none;padding:14px}.pnl.on{display:block}
+h2{font-size:15px;font-weight:600;margin-bottom:10px}
+h3{font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+label{font-size:11px;color:var(--txt3);display:block;margin-bottom:3px}
+input,select,textarea{width:100%;font-family:inherit;font-size:12px;border:1px solid var(--bdr2);border-radius:6px;padding:6px 8px;background:var(--bg3);color:var(--txt);outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+select option{background:var(--bg3)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+/* BUTTONS */
+.btn{font-family:inherit;font-size:12px;padding:6px 13px;border-radius:6px;cursor:pointer;border:1px solid var(--bdr2);background:var(--bg3);color:var(--txt);transition:all .15s;white-space:nowrap}
+.btn:hover{border-color:var(--acc);background:var(--bg4)}
+.btn.pri{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:700}.btn.pri:hover{opacity:.88}
+.btn.dng{border-color:var(--red);color:var(--red)}
+.btn.sm{padding:3px 9px;font-size:11px}
+/* MODAL */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:flex;align-items:flex-start;justify-content:center;padding:16px;z-index:200;overflow-y:auto}
+.mdl{background:var(--bg2);border:1px solid var(--bdr2);border-radius:12px;padding:18px;width:100%;max-width:640px;margin:auto}
+.mdl h2{font-size:14px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bdr);color:var(--acc)}
+.mft{display:flex;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--bdr);flex-wrap:wrap}
+.dvd{border:none;border-top:1px solid var(--bdr);margin:10px 0}
+/* STATS */
+.stats{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.stat{background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:9px 12px;flex:1;min-width:70px}
+.stat .v{font-size:17px;font-weight:700;color:var(--acc)}.stat .l{font-size:10px;color:var(--txt3);margin-top:1px}
+/* BADGES */
+.b{display:inline-block;font-size:10px;padding:1px 7px;border-radius:20px;font-weight:600;white-space:nowrap}
+.bw{background:var(--blu2);color:#93c5fd}.bk{background:var(--grn2);color:#6ee7b7}
+.bh{background:var(--org2);color:#fcd34d}.bwa{background:var(--red2);color:#fca5a5}
+.bo{background:var(--pur2);color:#c4b5fd}.ba{background:var(--bg4);color:var(--acc);border:1px solid var(--bdr2)}
+.bj{background:#134e4a;color:var(--grn)}.bd{background:#1f2937;color:var(--txt3)}
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:var(--bg4);font-size:10px;font-weight:700;color:var(--txt3);text-transform:uppercase;padding:7px 8px;border:1px solid var(--bdr);text-align:left;white-space:nowrap}
+.tbl td{padding:6px 8px;border:1px solid var(--bdr);vertical-align:top}
+.tbl tbody tr:hover td{background:var(--bg3)}
+.tbl tfoot td{background:var(--bg4);font-weight:700;padding:7px 8px;border:1px solid var(--bdr)}
+/* DAG CARDS */
+.dc{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.dch{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s;flex-wrap:wrap}
+.dch:hover{background:var(--bg3)}
+.dno{background:var(--acc);color:var(--bg);font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.di{flex:1;min-width:160px}.dt{font-size:13px;font-weight:600}.ds{font-size:11px;color:var(--txt3);margin-top:2px}
+.dpb{display:flex;align-items:center;gap:8px;min-width:160px}
+.pb{flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;transition:width .4s}
+.db{padding:0 14px 14px;display:none}.db.op{display:block}
+.prow{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--bdr);border-radius:6px;margin-bottom:6px;background:var(--bg2);cursor:pointer;transition:all .15s}
+.prow:hover{border-color:var(--acc);background:var(--bg3)}
+.step{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--bdr)}.step:last-child{border-bottom:none}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.st{font-size:12px;font-weight:600}.ss{font-size:11px;color:var(--txt3);margin-top:2px;line-height:1.5}
+/* ALERTS */
+.al{padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:8px;border:1px solid}
+.al.i{background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.3);color:#7dd3fc}
+.al.w{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#fcd34d}
+.al.e{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#fca5a5}
+.al.ok{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#6ee7b7}
+/* WARIS */
+.wr{background:var(--bg3);border:1px solid var(--bdr);border-radius:8px;padding:12px;margin-top:8px}
+.wrr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bdr);font-size:12px;gap:8px}
+.wrr:last-child{border-bottom:none;font-weight:700;font-size:13px;color:var(--acc)}
+/* CHECKLIST */
+.cli{display:flex;gap:7px;padding:6px 10px;border:1px solid var(--bdr);border-radius:5px;margin-bottom:4px;background:var(--bg2);align-items:flex-start}
+.cli input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--acc);width:14px;height:14px}
+.cll{font-size:12px;flex:1;color:var(--txt2)}.cll.dn{text-decoration:line-through;color:var(--txt3)}
+.law-item{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:12px;margin-bottom:8px}
+.law-item h4{font-size:13px;font-weight:600;color:var(--acc);margin-bottom:5px}
+.law-item p{font-size:12px;color:var(--txt2);line-height:1.65;margin-bottom:5px}
+.law-item ul{font-size:12px;color:var(--txt2);padding-left:14px;line-height:1.9}
+.empty{text-align:center;color:var(--txt3);font-size:12px;padding:24px 0}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--acc);border-radius:8px;padding:10px 16px;font-size:12px;color:var(--acc);z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+/* PRINT STYLES */
+@media print{
+  .nav,.toolbar,.btn,.tb-btn,.no-print{display:none!important}
+  body{background:white!important;color:black!important}
+  .pnl{display:block!important;padding:10px!important}
+  .dc,.stat,.law-item{border:1px solid #ccc!important;background:white!important;break-inside:avoid}
+  .tbl th,.tbl tfoot td{background:#f5f5f5!important;color:black!important}
+  .tbl td{color:black!important;border-color:#ccc!important}
+  .b,.badge{border:1px solid #aaa!important;background:white!important;color:black!important}
+  h2,h3,.dt,.v{color:black!important}
+  .txt2,.txt3,.ds,.ss{color:#444!important}
+  .dno{background:#333!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .acc{color:#0080a0!important}
+  #print-watermark{display:block!important;text-align:center;font-size:10px;color:#aaa;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd}
+}
+#print-watermark{display:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nt on" onclick="G('dag')">📐 দাগ লেজার</div>
+  <div class="nt" onclick="G('persons')">👥 ব্যক্তি তালিকা</div>
+  <div class="nt" onclick="G('waris')">⚖️ ওয়ারিশ হিসাব</div>
+  <div class="nt" onclick="G('ror')">📋 খতিয়ান ROR</div>
+  <div class="nt" onclick="G('tree')">🌳 পারিবারিক গাছ</div>
+  <div class="nt" onclick="G('law')">📖 আইন</div>
+  <div class="nt" onclick="G('cl')">✅ চেকলিস্ট</div>
+</div>
+
+<!-- GLOBAL TOOLBAR -->
+<div class="toolbar" id="main-toolbar">
+  <span class="tb-label">📁 ডেটা</span>
+  <button class="tb-btn pri" onclick="exportJSON()">⬇️ JSON ডাউনলোড</button>
+  <button class="tb-btn" onclick="triggerImport()">⬆️ JSON ইমপোর্ট</button>
+  <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+  <div class="tb-sep"></div>
+  <span class="tb-label">🖨️ প্রিন্ট</span>
+  <button class="tb-btn" onclick="printCurrent()">🖨️ বর্তমান পেজ</button>
+  <button class="tb-btn" onclick="printAll()">📄 সব পেজ</button>
+  <div class="tb-sep"></div>
+  <span class="tb-label">💾 ছবি</span>
+  <button class="tb-btn" onclick="saveImage()">🖼️ PNG সেভ</button>
+  <div class="tb-sep"></div>
+  <span class="tb-label">📤 এক্সপোর্ট</span>
+  <button class="tb-btn" onclick="exportCSV()">📊 CSV</button>
+  <button class="tb-btn" onclick="exportHTML()">🌐 HTML ফাইল</button>
+  <div class="tb-sep"></div>
+  <span class="tb-label">🔗 শেয়ার</span>
+  <button class="tb-btn" onclick="copyShareLink()">🔗 লিংক কপি</button>
+  <button class="tb-btn" onclick="copyAsText()">📋 টেক্সট কপি</button>
+</div>
+
+<div id="print-watermark">ওয়ারিশ ও জমি হিসাব — মুদ্রণ তারিখ: <span id="pw-date"></span></div>
+
+<!-- PANELS -->
+<div class="pnl on" id="pnl-dag">
+  <div class="row">
+    <div><h2>দাগ-ভিত্তিক জমির লেজার</h2>
+      <div style="font-size:11px;color:var(--txt3)">প্রতিটি দাগে মোট জমি → একাধিক মালিক → যোগ/বিয়োগ → অবশিষ্ট ট্র্যাক</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn sm" onclick="printSection('pnl-dag')">🖨️ এই পেজ</button>
+      <button class="btn sm" onclick="saveSectionImage('pnl-dag','dag-ledger')">🖼️ PNG</button>
+      <button class="btn pri" onclick="opDag(null)">+ দাগ যোগ</button>
+    </div>
+  </div>
+  <div id="dag-list"></div>
+</div>
+
+<div class="pnl" id="pnl-persons">
+  <div class="row">
+    <h2>ব্যক্তি তালিকা ও জমির উৎস</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn sm" onclick="printSection('pnl-persons')">🖨️ এই পেজ</button>
+      <button class="btn sm" onclick="saveSectionImage('pnl-persons','persons')">🖼️ PNG</button>
+      <button class="btn pri" onclick="opPerson(null)">+ ব্যক্তি যোগ</button>
+    </div>
+  </div>
+  <div id="person-list"></div>
+</div>
+
+<div class="pnl" id="pnl-waris">
+  <div class="row">
+    <h2>ইসলামি ওয়ারিশ হিসাব — হানাফি মাজহাব</h2>
+    <div style="display:flex;gap:6px">
+      <button class="btn sm" onclick="printSection('pnl-waris')">🖨️ প্রিন্ট</button>
+    </div>
+  </div>
+  <div class="al i">দাগ নির্বাচন করলে উপলব্ধ জমি স্বয়ংক্রিয় আসবে। ওয়ারিশ টিক দিন → অংশ বের হবে → ম্যানুয়াল সংশোধন → দাগে সংরক্ষণ করুন।</div>
+  <div class="g4" style="margin-bottom:10px">
+    <div><label>দাগ</label><select id="w-dag" onchange="wFromDag()"><option value="">— ম্যানুয়াল —</option></select></div>
+    <div><label>মোট জমি (শতক)</label><input id="w-tot" type="number" step="0.001" value="100" oninput="calcW()"></div>
+    <div><label>মৌজা</label><input id="w-mou" placeholder="মৌজা"></div>
+    <div><label>খতিয়ান নং</label><input id="w-kh" placeholder="CS/RS/BS"></div>
+  </div>
+  <h3>জীবিত ওয়ারিশ নির্বাচন</h3>
+  <div class="g3" id="w-grid" style="margin-bottom:10px"></div>
+  <div id="w-res"></div>
+  <div class="al w" id="w-warn" style="display:none"></div>
+  <div id="w-apply-block" style="display:none;margin-top:10px">
+    <div class="dvd"></div>
+    <div id="w-apply-preview"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn pri" onclick="applyWaris()">✓ দাগে এন্ট্রি করুন</button>
+      <button class="btn" onclick="document.getElementById('w-apply-block').style.display='none'">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<div class="pnl" id="pnl-ror">
+  <div class="row">
+    <h2>রেকর্ড অব রাইটস (ROR) — খতিয়ান</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn sm" onclick="printSection('pnl-ror')">🖨️ প্রিন্ট</button>
+      <button class="btn sm" onclick="saveSectionImage('pnl-ror','ror')">🖼️ PNG</button>
+      <button class="btn sm" onclick="exportRORCSV()">📊 CSV</button>
+    </div>
+  </div>
+  <div class="g4" style="margin-bottom:10px">
+    <div><label>জেলা</label><input id="r-jl" placeholder="জেলা"></div>
+    <div><label>উপজেলা</label><input id="r-up" placeholder="উপজেলা"></div>
+    <div><label>মৌজা</label><input id="r-mou" placeholder="মৌজা"></div>
+    <div><label>JL নং</label><input id="r-jln" placeholder="JL নং"></div>
+    <div><label>CS খতিয়ান নং</label><input id="r-cs" placeholder="CS"></div>
+    <div><label>RS খতিয়ান নং</label><input id="r-rs" placeholder="RS"></div>
+    <div><label>BS/SA খতিয়ান নং</label><input id="r-bs" placeholder="BS/SA"></div>
+    <div><label>নামজারি নং</label><input id="r-nj" placeholder="নামজারি"></div>
+  </div>
+  <div class="stats" id="ror-stats"></div>
+  <div style="overflow-x:auto" id="ror-table-wrap">
+    <table class="tbl">
+      <thead><tr><th>#</th><th>নাম</th><th>পিতা/স্বামী</th><th>সম্পর্ক</th><th>দাগ নং</th><th>মৌজা</th><th>ধরন</th><th>ওয়ারিশ</th><th>খরিদ</th><th>হেবা</th><th>ওয়াসিয়াত</th><th>মোট</th><th>দলিল নং</th><th>নামজারি</th><th>অবস্থা</th></tr></thead>
+      <tbody id="ror-body"></tbody>
+      <tfoot id="ror-foot"></tfoot>
+    </table>
+  </div>
+  <div style="margin-top:7px;font-size:11px;color:var(--txt3)">* সমস্ত তথ্য দাগ লেজার থেকে স্বয়ংক্রিয়ভাবে সংকলিত।</div>
+</div>
+
+<div class="pnl" id="pnl-tree">
+  <div class="row">
+    <h2>পারিবারিক ওয়ারিশ গাছ</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn sm" onclick="printSection('pnl-tree')">🖨️ প্রিন্ট</button>
+      <button class="btn sm" onclick="saveTreeImage()">🖼️ PNG সেভ</button>
+      <button class="btn sm" onclick="shareTree()">📤 শেয়ার</button>
+      <button class="btn pri" onclick="opPerson(null)">+ সদস্য যোগ</button>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--txt3);margin-bottom:10px">বাক্সে ক্লিক = সম্পাদনা</div>
+  <div style="overflow-x:auto" id="tree-container">
+    <svg id="tree-svg" style="overflow:visible" width="900" height="460"></svg>
+  </div>
+</div>
+
+<div class="pnl" id="pnl-law">
+  <div class="row">
+    <h2>আইন রেফারেন্স</h2>
+    <div style="display:flex;gap:6px">
+      <button class="btn sm" onclick="printSection('pnl-law')">🖨️ প্রিন্ট</button>
+    </div>
+  </div>
+  <div id="law-wrap"></div>
+</div>
+
+<div class="pnl" id="pnl-cl">
+  <div class="row">
+    <h2>প্রস্তুতি চেকলিস্ট</h2>
+    <div style="display:flex;gap:6px">
+      <button class="btn sm" onclick="printSection('pnl-cl')">🖨️ প্রিন্ট</button>
+      <button class="btn sm" onclick="exportCLCSV()">📊 CSV</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="v" id="cl-d">0</div><div class="l">সম্পন্ন</div></div>
+    <div class="stat"><div class="v" id="cl-t">0</div><div class="l">মোট</div></div>
+    <div class="stat"><div class="v" id="cl-p">0%</div><div class="l">অগ্রগতি</div></div>
+  </div>
+  <div id="cl-wrap"></div>
+</div>
+
+<!-- MODALS (same as before) -->
+<div class="mbg" id="mdl-dag" style="display:none" onclick="if(event.target===this)CM('mdl-dag')">
+<div class="mdl"><h2 id="dm-t">নতুন দাগ</h2>
+<div class="g3">
+  <div><label>দাগ নং *</label><input id="d-no" placeholder="১০১"></div>
+  <div><label>মৌজা</label><input id="d-mou" placeholder="মৌজার নাম"></div>
+  <div><label>থানা/উপজেলা</label><input id="d-tha" placeholder="থানা"></div>
+  <div><label>মোট জমি (শতক) *</label><input id="d-tot" type="number" step="0.001" placeholder="0.000"></div>
+  <div><label>জমির ধরন</label><select id="d-typ"><option>কৃষি জমি</option><option>বাস্তুভিটা</option><option>পুকুর</option><option>বাগান</option><option>নাল জমি</option><option>খাস জমি</option><option>অন্যান্য</option></select></div>
+  <div><label>CS খতিয়ান নং</label><input id="d-cs" placeholder="CS নং"></div>
+  <div><label>RS খতিয়ান নং</label><input id="d-rs" placeholder="RS নং"></div>
+  <div><label>BS/SA খতিয়ান নং</label><input id="d-bs" placeholder="BS/SA নং"></div>
+  <div><label>নামজারি নং</label><input id="d-nj" placeholder="নামজারি নং"></div>
+</div>
+<div><label>বিবরণ</label><textarea id="d-nt" rows="2" placeholder="বিশেষ তথ্য..."></textarea></div>
+<div class="mft">
+  <button class="btn pri" onclick="saveDag()">💾 সংরক্ষণ</button>
+  <button class="btn" onclick="CM('mdl-dag')">বাতিল</button>
+  <button class="btn dng" id="d-del" style="display:none;margin-left:auto" onclick="delDag()">🗑 মুছুন</button>
+</div></div></div>
+
+<div class="mbg" id="mdl-tx" style="display:none" onclick="if(event.target===this)CM('mdl-tx')">
+<div class="mdl"><h2 id="tx-t">হস্তান্তর / এন্ট্রি</h2>
+<div class="al i" id="tx-av"></div>
+<div class="g3">
+  <div><label>ধরন *</label><select id="tx-typ" onchange="txTypChg()">
+    <option value="waris">ওয়ারিশ সূত্রে প্রাপ্তি (+)</option>
+    <option value="kharid">খরিদ / ক্রয় (+)</option>
+    <option value="heba">হেবা সূত্রে (+)</option>
+    <option value="wasiyat">ওয়াসিয়াত সূত্রে (+)</option>
+    <option value="sale_out">বিক্রয় (−)</option>
+    <option value="heba_out">হেবা প্রদান (−)</option>
+    <option value="corr">সংশোধন</option>
+  </select></div>
+  <div><label>পরিমাণ (শতক) *</label><input id="tx-amt" type="number" step="0.001" placeholder="0.000"></div>
+  <div><label>তারিখ</label><input id="tx-dt" type="date"></div>
+</div>
+<div class="g2" id="tx-to-row">
+  <div><label>প্রাপক</label><select id="tx-to"><option value="">— বাইরে —</option></select></div>
+  <div><label>দাতা / পূর্ব মালিক</label><select id="tx-frm"><option value="">— মূল —</option></select></div>
+</div>
+<div id="tx-src-blk">
+  <div class="dvd"></div><h3>দাতার জমির উৎস (Chain of Title)</h3>
+  <div class="g3">
+    <div><label>দাতা কীভাবে পেয়েছেন?</label><select id="tx-src"><option value="">— নির্বাচন —</option>
+      <option>পিতার ওয়ারিশ সূত্রে</option><option>মাতার ওয়ারিশ সূত্রে</option>
+      <option>স্বামীর ওয়ারিশ সূত্রে</option><option>স্ত্রীর ওয়ারিশ সূত্রে</option>
+      <option>নিজে খরিদ করেছেন</option><option>হেবা সূত্রে পেয়েছেন</option>
+      <option>আদালতের ডিক্রি সূত্রে</option><option>অন্যান্য</option>
+    </select></div>
+    <div><label>বায়া দলিল নং</label><input id="tx-sdl" placeholder="পূর্ববর্তী দলিল"></div>
+    <div><label>দাতার নামজারি নং</label><input id="tx-snj" placeholder="নামজারি নং"></div>
+  </div>
+</div>
+<div class="dvd"></div><h3>বর্তমান দলিল তথ্য</h3>
+<div class="g3">
+  <div><label>দলিল নং</label><input id="tx-dl" placeholder="দলিল নং"></div>
+  <div><label>সাব-রেজিস্ট্রি</label><input id="tx-rg" placeholder="অফিস"></div>
+  <div><label>মূল্য (টাকা)</label><input id="tx-pr" type="number" placeholder="0"></div>
+  <div><label>নামজারি নং</label><input id="tx-nj" placeholder="নামজারি নং"></div>
+  <div><label>DCR রশিদ নং</label><input id="tx-tax" placeholder="DCR নং"></div>
+  <div><label>সাক্ষী</label><input id="tx-wit" placeholder="সাক্ষীর নাম"></div>
+</div>
+<div><label>মন্তব্য</label><textarea id="tx-nt" rows="2" placeholder="..."></textarea></div>
+<div class="al e" id="tx-err" style="display:none"></div>
+<div class="mft">
+  <button class="btn pri" onclick="saveTx()">💾 সংরক্ষণ</button>
+  <button class="btn" onclick="CM('mdl-tx')">বাতিল</button>
+  <button class="btn dng" id="tx-del" style="display:none;margin-left:auto" onclick="delTx()">🗑 মুছুন</button>
+</div></div></div>
+
+<div class="mbg" id="mdl-per" style="display:none" onclick="if(event.target===this)CM('mdl-per')">
+<div class="mdl"><h2 id="pm-t">নতুন ব্যক্তি</h2>
+<div class="g2">
+  <div><label>নাম *</label><input id="pm-nm" placeholder="পূর্ণ নাম"></div>
+  <div><label>সম্পর্ক</label><select id="pm-rl">
+    <option>পিতা</option><option>মাতা</option><option>স্বামী</option><option>স্ত্রী</option>
+    <option selected>পুত্র</option><option>কন্যা</option><option>ভাই</option><option>বোন</option>
+    <option>দাদা</option><option>দাদি</option><option>নানা</option><option>নানি</option>
+    <option>নাতি (পুত্রের পুত্র)</option><option>নাতনি</option>
+    <option>চাচা</option><option>ফুফু</option><option>মামা</option><option>খালা</option>
+    <option>অন্যান্য</option>
+  </select></div>
+  <div><label>পিতা / স্বামী</label><select id="pm-par"></select></div>
+  <div><label>অবস্থা</label><select id="pm-alv"><option value="1">জীবিত ✓</option><option value="0">মৃত ✗</option></select></div>
+  <div><label>NID নং</label><input id="pm-nid" placeholder="NID নং"></div>
+  <div><label>মোবাইল</label><input id="pm-ph" placeholder="01X-XXXXXXXX"></div>
+</div>
+<div class="mft">
+  <button class="btn pri" onclick="savePerson()">💾 সংরক্ষণ</button>
+  <button class="btn" onclick="CM('mdl-per')">বাতিল</button>
+  <button class="btn dng" id="pm-del" style="display:none;margin-left:auto" onclick="delPerson()">🗑 মুছুন</button>
+</div></div></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== DATA ===== */
+let persons=[
+  {id:1,name:'আব্দুর রহমান',rel:'পিতা',parent:null,alive:false,nid:'',phone:''},
+  {id:2,name:'জমিলা বেগম',rel:'স্ত্রী',parent:1,alive:true,nid:'',phone:''},
+  {id:3,name:'করিম উদ্দিন',rel:'পুত্র',parent:1,alive:true,nid:'',phone:''},
+  {id:4,name:'রহিমা বেগম',rel:'কন্যা',parent:1,alive:true,nid:'',phone:''},
+  {id:5,name:'সালিম উদ্দিন',rel:'পুত্র',parent:1,alive:false,nid:'',phone:''},
+  {id:6,name:'নাসরিন',rel:'স্ত্রী',parent:5,alive:true,nid:'',phone:''},
+  {id:7,name:'রফিক',rel:'নাতি (পুত্রের পুত্র)',parent:5,alive:true,nid:'',phone:''},
+];
+let nPid=8,ePid=null;
+let dags=[
+  {id:1,no:'১০১',mouza:'চরফ্যাশন',thana:'চরফ্যাশন',total:100,type:'কৃষি জমি',cs:'৪৫৬',rs:'৭৮৯',bs:'',nj:'৪৫/২০০১',notes:'',txs:[
+    {id:1,type:'waris',amt:65.5,date:'2000-01-01',toP:1,frP:null,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:'মূল মালিকানা'},
+    {id:2,type:'kharid',amt:10,date:'2005-06-10',toP:1,frP:null,src:'নিজে খরিদ করেছেন',sdl:'',snj:'',dl:'৫৫/২০০৫',rg:'চরফ্যাশন',pr:250000,nj:'১২/২০০৫',tax:'',wit:'',nt:''},
+    {id:3,type:'waris',amt:10.5,date:'2020-06-01',toP:2,frP:1,src:'স্বামীর ওয়ারিশ সূত্রে',sdl:'',snj:'৪৫/২০০১',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+    {id:4,type:'waris',amt:18.5,date:'2020-06-01',toP:3,frP:1,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'৪৫/২০০১',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+    {id:5,type:'kharid',amt:10,date:'2015-03-15',toP:3,frP:null,src:'নিজে খরিদ করেছেন',sdl:'',snj:'',dl:'৪৫৬/২০১৫',rg:'চরফ্যাশন',pr:300000,nj:'৭৮/২০১৫',tax:'DC/২৩/১২',wit:'',nt:''},
+    {id:6,type:'waris',amt:9.25,date:'2020-06-01',toP:4,frP:1,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+    {id:7,type:'sale_out',amt:5,date:'2022-03-10',toP:null,frP:3,src:'',sdl:'৪৫৬/২০১৫',snj:'',dl:'৭৮৯/২০২২',rg:'চরফ্যাশন',pr:200000,nj:'',tax:'',wit:'',nt:'বাইরে বিক্রয়'},
+  ]},
+  {id:2,no:'১০২',mouza:'চরফ্যাশন',thana:'চরফ্যাশন',total:50,type:'বাস্তুভিটা',cs:'৪৫৭',rs:'৭৯০',bs:'',nj:'৪৬/২০০১',notes:'বাড়ির জমি',txs:[
+    {id:1,type:'waris',amt:25,date:'2000-01-01',toP:1,frP:null,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+    {id:2,type:'waris',amt:12.5,date:'2020-06-01',toP:3,frP:1,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+    {id:3,type:'waris',amt:6.25,date:'2020-06-01',toP:4,frP:1,src:'পিতার ওয়ারিশ সূত্রে',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:''},
+  ]},
+];
+let nDid=3,nTid=100,eDid=null,eTid=null,aDid=null;
+let clS={};
+let currentTab='dag';
+
+const TX_LABEL={waris:'ওয়ারিশ',kharid:'খরিদ',heba:'হেবা',wasiyat:'ওয়াসিয়াত',sale_out:'বিক্রয় (−)',heba_out:'হেবা প্রদান (−)',corr:'সংশোধন'};
+const TX_BCLS={waris:'bw',kharid:'bk',heba:'bh',wasiyat:'bwa',sale_out:'bo',heba_out:'bo',corr:'ba'};
+const TABS=['dag','persons','waris','ror','tree','law','cl'];
+
+function txBadge(t){return`<span class="b ${TX_BCLS[t]||'ba'}">${TX_LABEL[t]||t}</span>`}
+function dagSold(d){return d.txs.filter(t=>t.type==='sale_out'||t.type==='heba_out').reduce((s,t)=>s+t.amt,0)}
+function dagIn(d){return d.txs.filter(t=>t.type!=='sale_out'&&t.type!=='heba_out'&&t.type!=='corr').reduce((s,t)=>s+t.amt,0)}
+function dagRemain(d){return d.total-dagSold(d)}
+const gv=id=>document.getElementById(id).value;
+const sv=(id,v)=>document.getElementById(id).value=v||'';
+const CM=id=>document.getElementById(id).style.display='none';
+
+/* ===== TOAST ===== */
+function toast(msg,dur=2800){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),dur);
+}
+
+/* ===== TABS ===== */
+function G(t){
+  currentTab=t;
+  document.querySelectorAll('.nt').forEach((el,i)=>el.classList.toggle('on',TABS[i]===t));
+  TABS.forEach(id=>document.getElementById('pnl-'+id).classList.toggle('on',id===t));
+  if(t==='dag')rdDags();if(t==='persons')rdPersons();if(t==='waris')initW();
+  if(t==='ror')rdROR();if(t==='tree')drawTree();if(t==='law')rdLaw();if(t==='cl')rdCL();
+}
+
+/* ============================
+   EXPORT / IMPORT / PRINT
+   ============================ */
+
+/* --- JSON Export --- */
+function exportJSON(){
+  const data={version:'1.0',exportDate:new Date().toISOString(),persons,dags,clS};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`waris-ledger-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ JSON ফাইল ডাউনলোড হয়েছে');
+}
+
+/* --- JSON Import --- */
+function triggerImport(){document.getElementById('import-file').click()}
+function importJSON(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!data.persons||!data.dags)throw new Error('Invalid');
+      if(!confirm(`ইমপোর্ট করলে বর্তমান সব ডেটা মুছে যাবে। নিশ্চিত?`))return;
+      persons=data.persons;dags=data.dags;clS=data.clS||{};
+      nPid=Math.max(...persons.map(p=>p.id),0)+1;
+      nDid=Math.max(...dags.map(d=>d.id),0)+1;
+      nTid=Math.max(...dags.flatMap(d=>d.txs.map(t=>t.id)),0)+1;
+      G(currentTab);syncWsel();
+      toast('✅ ডেটা সফলভাবে ইমপোর্ট হয়েছে');
+    }catch{toast('❌ ফাইল পড়তে সমস্যা হয়েছে')}
+  };
+  reader.readAsText(file);e.target.value='';
+}
+
+/* --- Print Current Section --- */
+function printSection(panelId){
+  const panel=document.getElementById(panelId);
+  const win=window.open('','_blank','width=900,height=700');
+  win.document.write(`<!DOCTYPE html><html lang="bn"><head>
+    <meta charset="UTF-8">
+    <title>ওয়ারিশ হিসাব — মুদ্রণ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{font-family:'Hind Siliguri',sans-serif;font-size:13px;color:#111;padding:20px}
+      h2{font-size:16px;font-weight:700;margin-bottom:10px;border-bottom:2px solid #333;padding-bottom:6px}
+      h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#555;margin-bottom:6px}
+      table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px}
+      th{background:#f0f0f0;font-size:10px;font-weight:700;text-transform:uppercase;padding:6px 7px;border:1px solid #bbb;text-align:left}
+      td{padding:5px 7px;border:1px solid #ccc;vertical-align:top}
+      tr:nth-child(even) td{background:#f9f9f9}
+      tfoot td{background:#eee;font-weight:700}
+      .badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;border:1px solid #aaa}
+      .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+      .stat{border:1px solid #bbb;border-radius:6px;padding:8px 12px;flex:1;min-width:80px}
+      .stat .v{font-size:18px;font-weight:700;color:#0080a0}
+      .stat .l{font-size:10px;color:#666}
+      .dag-card{border:1px solid #bbb;border-radius:8px;margin-bottom:10px;overflow:hidden;page-break-inside:avoid}
+      .dag-header{background:#f0f0f0;padding:10px 14px;border-bottom:1px solid #ccc}
+      .dag-body{padding:10px 14px}
+      .watermark{text-align:center;font-size:10px;color:#aaa;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #ddd}
+      @media print{button{display:none}}
+    </style>
+  </head><body>
+    <div class="watermark">ওয়ারিশ ও জমি হিসাব লেজার — মুদ্রণ তারিখ: ${new Date().toLocaleDateString('bn-BD')}</div>
+    ${panel.innerHTML}
+    <script>window.onload=()=>{window.print();setTimeout(()=>window.close(),1000)}<\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+/* --- Print All --- */
+function printAll(){
+  const allPanels=['dag','persons','ror','law','cl'];
+  // Render all
+  rdDags();rdPersons();rdROR();rdLaw();rdCL();
+  setTimeout(()=>{
+    const parts=allPanels.map(id=>`<div style="page-break-before:always"><h1 style="font-size:16px;font-weight:700;border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:12px">${{dag:'📐 দাগ লেজার',persons:'👥 ব্যক্তি তালিকা',ror:'📋 খতিয়ান ROR',law:'📖 আইন রেফারেন্স',cl:'✅ চেকলিস্ট'}[id]}</h1>${document.getElementById('pnl-'+id).innerHTML}</div>`).join('');
+    const win=window.open('','_blank','width=900,height=700');
+    win.document.write(`<!DOCTYPE html><html lang="bn"><head>
+      <meta charset="UTF-8"><title>ওয়ারিশ হিসাব — সম্পূর্ণ রিপোর্ট</title>
+      <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <style>*{box-sizing:border-box}body{font-family:'Hind Siliguri',sans-serif;font-size:12px;color:#111;padding:16px}
+      h1,h2{color:#111}table{width:100%;border-collapse:collapse;font-size:11px;margin:8px 0}
+      th{background:#eee;padding:5px 6px;border:1px solid #bbb;text-align:left;font-size:10px}
+      td{padding:4px 6px;border:1px solid #ccc}tfoot td{background:#eee;font-weight:700}
+      .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+      .stat{border:1px solid #bbb;border-radius:5px;padding:6px 10px;flex:1;min-width:70px}
+      .stat .v{font-size:15px;font-weight:700;color:#0080a0}.stat .l{font-size:9px;color:#666}
+      .dag-card,.law-item{border:1px solid #bbb;border-radius:6px;margin-bottom:8px;padding:8px;page-break-inside:avoid}
+      .b,.badge{border:1px solid #aaa;padding:1px 5px;border-radius:10px;font-size:10px}
+      @media print{.no-print,.btn,.tb-btn{display:none!important}}</style>
+    </head><body>
+      <div style="text-align:center;border-bottom:2px solid #333;margin-bottom:16px;padding-bottom:10px">
+        <h1 style="font-size:20px">ওয়ারিশ ও জমি হিসাব লেজার</h1>
+        <div style="font-size:11px;color:#666">মুদ্রণ তারিখ: ${new Date().toLocaleDateString('bn-BD')}</div>
+      </div>
+      ${parts}
+      <script>window.onload=()=>{window.print()}<\/script>
+    </body></html>`);
+    win.document.close();
+  },300);
+}
+
+/* --- Print current tab --- */
+function printCurrent(){printSection('pnl-'+currentTab)}
+
+/* --- Save as Image (PNG) --- */
+async function saveImage(){saveSectionImage('pnl-'+currentTab,'page')}
+async function saveSectionImage(panelId,filename){
+  try{
+    const el=document.getElementById(panelId);
+    if(!window.html2canvas){
+      // Load html2canvas dynamically
+      await new Promise((res,rej)=>{
+        const s=document.createElement('script');
+        s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.onload=res;s.onerror=rej;document.head.appendChild(s);
+      });
+    }
+    toast('🖼️ ছবি তৈরি হচ্ছে...',4000);
+    const canvas=await html2canvas(el,{backgroundColor:'#0f1117',scale:1.5,useCORS:true,logging:false});
+    const a=document.createElement('a');
+    a.download=`waris-${filename}-${new Date().toISOString().slice(0,10)}.png`;
+    a.href=canvas.toDataURL('image/png');a.click();
+    toast('✅ PNG সেভ হয়েছে');
+  }catch(e){toast('❌ ছবি তৈরিতে সমস্যা: '+e.message)}
+}
+
+async function saveTreeImage(){
+  try{
+    const el=document.getElementById('tree-container');
+    if(!window.html2canvas){
+      await new Promise((res,rej)=>{
+        const s=document.createElement('script');
+        s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.onload=res;s.onerror=rej;document.head.appendChild(s);
+      });
+    }
+    toast('🖼️ গাছের ছবি তৈরি হচ্ছে...',4000);
+    const canvas=await html2canvas(el,{backgroundColor:'#0f1117',scale:2,useCORS:true,logging:false});
+    const a=document.createElement('a');
+    a.download=`waris-family-tree-${new Date().toISOString().slice(0,10)}.png`;
+    a.href=canvas.toDataURL('image/png');a.click();
+    toast('✅ পারিবারিক গাছের ছবি সেভ হয়েছে');
+  }catch(e){toast('❌ '+e.message)}
+}
+
+/* --- SVG Export for tree --- */
+function shareTree(){
+  const svg=document.getElementById('tree-svg');
+  const svgData=`<?xml version="1.0" encoding="UTF-8"?>\n`+svg.outerHTML;
+  const blob=new Blob([svgData],{type:'image/svg+xml'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`waris-tree-${new Date().toISOString().slice(0,10)}.svg`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ SVG ফাইল ডাউনলোড হয়েছে');
+}
+
+/* --- CSV Export (ROR) --- */
+function exportCSV(){exportRORCSV()}
+function exportRORCSV(){
+  const byP={};
+  dags.forEach(dag=>dag.txs.forEach(tx=>{
+    if(!tx.toP)return;
+    if(!byP[tx.toP])byP[tx.toP]={waris:0,kharid:0,heba:0,wasiyat:0,dags:[],dls:[],njs:[]};
+    const b=byP[tx.toP];
+    if(tx.type==='waris')b.waris+=tx.amt;else if(tx.type==='kharid')b.kharid+=tx.amt;
+    else if(tx.type==='heba')b.heba+=tx.amt;else if(tx.type==='wasiyat')b.wasiyat+=tx.amt;
+    if(!b.dags.includes(dag.no))b.dags.push(dag.no);
+    if(tx.dl&&!b.dls.includes(tx.dl))b.dls.push(tx.dl);
+    if(tx.nj&&!b.njs.includes(tx.nj))b.njs.push(tx.nj);
+  }));
+  const BOM='\uFEFF';
+  const header='#,নাম,পিতা/স্বামী,সম্পর্ক,দাগ নং,ওয়ারিশ (শতক),খরিদ (শতক),হেবা (শতক),ওয়াসিয়াত (শতক),মোট (শতক),দলিল নং,নামজারি,অবস্থা\n';
+  const rows=Object.keys(byP).map((pid,i)=>{
+    const p=persons.find(x=>x.id==pid);if(!p)return'';
+    const b=byP[pid];const par=p.parent?persons.find(x=>x.id===p.parent):null;
+    const tot=(b.waris+b.kharid+b.heba+b.wasiyat).toFixed(3);
+    return[i+1,p.name,par?par.name:'',p.rel,b.dags.join(' | '),b.waris.toFixed(3),b.kharid.toFixed(3),b.heba.toFixed(3),b.wasiyat.toFixed(3),tot,b.dls.join(' | '),b.njs.join(' | '),p.alive?'জীবিত':'মৃত'].join(',');
+  }).join('\n');
+  const blob=new Blob([BOM+header+rows],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`waris-ror-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ CSV ফাইল ডাউনলোড হয়েছে');
+}
+
+/* --- Checklist CSV --- */
+function exportCLCSV(){
+  const BOM='\uFEFF';
+  const CLS=[
+    {c:'দলিল যাচাই',i:['মূল দলিল ও সার্টিফাইড কপি','বায়া দলিল (Chain of Title) যাচাই','সাব-রেজিস্ট্রি থেকে সার্টিফাইড কপি','সাক্ষীর পরিচয় যাচাই','স্ট্যাম্প ডিউটি পরিশোধ']},
+    {c:'খতিয়ান ও দাগ',i:['CS, RS, BS খতিয়ান সংগ্রহ','মাঠ পর্চা সংগ্রহ','দাগ নম্বর মিলানো','তফসিল যাচাই','মৌজা ম্যাপ']},
+    {c:'নামজারি ও খাজনা',i:['নামজারি আদেশ','ভূমি উন্নয়ন কর রশিদ','হোল্ডিং নম্বর','ই-নামজারি পোর্টাল']},
+    {c:'ওয়ারিশ সনদ',i:['ওয়ারিশ সনদ','মৃত্যু সনদ','NID','কাবিননামা']},
+    {c:'আদালত',i:['মামলা যাচাই','নিষেধাজ্ঞা যাচাই','অধিগ্রহণ নোটিশ','Limitation সময়সীমা']},
+  ];
+  let rows='বিভাগ,কাজ,অবস্থা\n';
+  CLS.forEach((cat,ci)=>cat.i.forEach((item,ii)=>{
+    const k=`${ci}-${ii}`;rows+=`${cat.c},${item},${clS[k]?'সম্পন্ন':'অসম্পন্ন'}\n`;
+  }));
+  const blob=new Blob([BOM+rows],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`checklist-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ চেকলিস্ট CSV ডাউনলোড হয়েছে');
+}
+
+/* --- Export Full HTML --- */
+function exportHTML(){
+  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`waris-ledger-${new Date().toISOString().slice(0,10)}.html`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ HTML ফাইল ডাউনলোড হয়েছে');
+}
+
+/* --- Copy Share Link (data URI) --- */
+function copyShareLink(){
+  const data={version:'1.0',exportDate:new Date().toISOString(),persons,dags,clS};
+  const json=JSON.stringify(data);
+  const b64=btoa(unescape(encodeURIComponent(json)));
+  const link=`data:application/json;base64,${b64}`;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(link).then(()=>toast('🔗 ডেটা লিংক ক্লিপবোর্ডে কপি হয়েছে (খুব বড় হতে পারে)'));
+  }else{
+    const ta=document.createElement('textarea');ta.value=link;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+    toast('🔗 লিংক কপি হয়েছে');
+  }
+}
+
+/* --- Copy as readable text --- */
+function copyAsText(){
+  let txt=`ওয়ারিশ ও জমি হিসাব লেজার\n${'='.repeat(40)}\n\n`;
+  txt+=`পরিবারের সদস্য (${persons.length} জন):\n`;
+  persons.forEach((p,i)=>{
+    const par=p.parent?persons.find(x=>x.id===p.parent):null;
+    txt+=`${i+1}. ${p.name} (${p.rel}) — ${p.alive?'জীবিত':'মৃত'}${par?' | পিতা/স্বামী: '+par.name:''}\n`;
+  });
+  txt+=`\nদাগ তালিকা (${dags.length}টি):\n`;
+  dags.forEach(dag=>{
+    const inn=dagIn(dag),sold=dagSold(dag),rem=dagRemain(dag);
+    txt+=`\nদাগ ${dag.no} — ${dag.mouza} (${dag.type})\n`;
+    txt+=`  মোট: ${dag.total} শতক | বণ্টিত: ${inn.toFixed(3)} | বিক্রয়: ${sold.toFixed(3)} | অবশিষ্ট: ${rem.toFixed(3)}\n`;
+    dag.txs.forEach(tx=>{
+      const toP=tx.toP?persons.find(p=>p.id===tx.toP):null;
+      txt+=`  • ${TX_LABEL[tx.type]}: ${tx.amt} শতক → ${toP?toP.name:'বাইরে'} ${tx.dl?'| দলিল: '+tx.dl:''} ${tx.date?'| '+tx.date:''}\n`;
+    });
+  });
+  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>toast('📋 টেক্সট কপি হয়েছে'));}
+  else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('📋 টেক্সট কপি হয়েছে');}
+}
+
+/* ===== DAG RENDER ===== */
+function rdDags(){
+  const el=document.getElementById('dag-list');
+  if(!dags.length){el.innerHTML='<div class="empty">কোনো দাগ নেই।</div>';return;}
+  el.innerHTML=dags.map(dag=>{
+    const inn=dagIn(dag),sold=dagSold(dag),remain=dagRemain(dag);
+    const pct=Math.min(100,dag.total>0?Math.round(inn/dag.total*100):0);
+    const over=inn>dag.total;
+    const col=over?'var(--red)':pct>90?'var(--org)':'var(--grn)';
+    const open=aDid===dag.id;
+    return`<div class="dc">
+      <div class="dch" onclick="toggleDag(${dag.id})">
+        <div class="dno">দাগ ${dag.no}</div>
+        <div class="di">
+          <div class="dt">${dag.mouza||'—'} — ${dag.type}
+            ${dag.cs?`<span class="b ba" style="margin-left:5px">CS:${dag.cs}</span>`:''}
+            ${dag.rs?`<span class="b ba" style="margin-left:3px">RS:${dag.rs}</span>`:''}
+          </div>
+          <div class="ds">মোট: <b>${dag.total}</b> | বণ্টিত: <b>${inn.toFixed(3)}</b> | বিক্রয়: <b style="color:var(--red)">${sold.toFixed(3)}</b> | অবশিষ্ট: <b style="color:${remain<0?'var(--red)':remain===0?'var(--txt3)':'var(--grn)'}">${remain.toFixed(3)}</b> শতক</div>
+        </div>
+        <div class="dpb">
+          <span style="font-size:10px;color:var(--txt3)">${pct}%</span>
+          <div class="pb"><div class="pf" style="width:${pct}%;background:${col}"></div></div>
+          ${over?'<span style="color:var(--red);font-size:10px">⚠️</span>':''}
+        </div>
+        <span style="color:var(--txt3);margin-left:8px;font-size:12px">${open?'▲':'▼'}</span>
+      </div>
+      <div class="db ${open?'op':''}" id="db-${dag.id}">
+        <div style="display:flex;gap:6px;justify-content:flex-end;margin-bottom:10px;flex-wrap:wrap" class="no-print">
+          <button class="btn sm" onclick="printDag(${dag.id})">🖨️ এই দাগ</button>
+          <button class="btn sm" onclick="exportDagCSV(${dag.id})">📊 CSV</button>
+          <button class="btn sm" onclick="opDag(${dag.id})">✏️ সম্পাদনা</button>
+          <button class="btn sm pri" onclick="opTx(${dag.id},null)">+ এন্ট্রি যোগ</button>
+        </div>
+        ${rdTxTable(dag)}
+        ${rdDagSum(dag)}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* --- Print single dag --- */
+function printDag(dagId){
+  const dag=dags.find(d=>d.id===dagId);if(!dag)return;
+  const html=`<div>${document.getElementById('db-'+dagId).innerHTML}</div>`;
+  const win=window.open('','_blank','width=900,height=600');
+  win.document.write(`<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8">
+    <title>দাগ ${dag.no} — মুদ্রণ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>*{box-sizing:border-box}body{font-family:'Hind Siliguri',sans-serif;font-size:12px;color:#111;padding:16px}
+    h2,h3{color:#111}table{width:100%;border-collapse:collapse;font-size:11px;margin:8px 0}
+    th{background:#eee;padding:5px;border:1px solid #bbb;text-align:left}
+    td{padding:4px 5px;border:1px solid #ccc}tfoot td{background:#eee;font-weight:700}
+    button{display:none}.b{border:1px solid #aaa;padding:1px 5px;border-radius:10px;font-size:10px}</style>
+  </head><body>
+    <h2>দাগ ${dag.no} — ${dag.mouza} (${dag.type}) — মুদ্রণ তারিখ: ${new Date().toLocaleDateString('bn-BD')}</h2>
+    <p>মোট: ${dag.total} শতক | CS: ${dag.cs||'—'} | RS: ${dag.rs||'—'}</p><hr style="margin:8px 0">
+    ${html}
+    <script>window.onload=()=>{window.print();setTimeout(()=>window.close(),1000)}<\/script>
+  </body></html>`);
+  win.document.close();
+}
+
+/* --- Export single dag CSV --- */
+function exportDagCSV(dagId){
+  const dag=dags.find(d=>d.id===dagId);if(!dag)return;
+  const BOM='\uFEFF';
+  let rows=`তারিখ,ধরন,পরিমাণ (শতক),প্রাপক,দাতা,উৎস,দলিল নং,বায়া দলিল,মূল্য (টাকা),নামজারি,মন্তব্য\n`;
+  dag.txs.forEach(tx=>{
+    const toP=tx.toP?persons.find(p=>p.id===tx.toP)?.name:'বাইরে';
+    const frP=tx.frP?persons.find(p=>p.id===tx.frP)?.name:'মূল';
+    rows+=`${tx.date||''},${TX_LABEL[tx.type]||tx.type},${tx.amt},${toP||''},${frP||''},${tx.src||''},${tx.dl||''},${tx.sdl||''},${tx.pr||0},${tx.nj||''},${tx.nt||''}\n`;
+  });
+  const blob=new Blob([BOM+rows],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`dag-${dag.no}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast(`✅ দাগ ${dag.no} এর CSV ডাউনলোড হয়েছে`);
+}
+
+function rdTxTable(dag){
+  if(!dag.txs.length)return'<div class="empty">কোনো এন্ট্রি নেই</div>';
+  const rows=dag.txs.map(tx=>{
+    const isOut=tx.type==='sale_out'||tx.type==='heba_out';
+    const delta=isOut?-tx.amt:tx.amt;
+    const toP=tx.toP?persons.find(p=>p.id===tx.toP):null;
+    const frP=tx.frP?persons.find(p=>p.id===tx.frP):null;
+    return`<tr>
+      <td style="white-space:nowrap;color:var(--txt3);font-size:11px">${tx.date||'—'}</td>
+      <td>${txBadge(tx.type)}</td>
+      <td style="font-weight:700;color:${delta>=0?'var(--grn)':'var(--red)'}">${delta>=0?'+':''}${tx.amt.toFixed(3)}</td>
+      <td>${toP?`<span style="color:var(--acc)">${toP.name}</span>`:'<span style="color:var(--txt3)">বাইরে</span>'}</td>
+      <td style="font-size:11px;color:var(--txt2)">${frP?frP.name:tx.src?'মূল':'—'}</td>
+      <td style="font-size:11px;color:var(--txt3)">${tx.src||'—'}</td>
+      <td style="font-size:11px">${tx.dl?`<span class="b ba">${tx.dl}</span>`:'—'}</td>
+      <td style="font-size:11px;color:var(--txt3)">${tx.sdl?`বায়া: ${tx.sdl}`:'—'}</td>
+      <td style="font-size:11px;color:var(--txt3)">${tx.pr?'৳'+parseInt(tx.pr).toLocaleString():'—'}</td>
+      <td style="font-size:11px;color:var(--txt3)">${tx.nj||'—'}</td>
+      <td style="font-size:11px;color:var(--txt3)">${tx.nt||'—'}</td>
+      <td class="no-print"><button class="btn sm" onclick="opTx(${dag.id},${tx.id})">✏️</button></td>
+    </tr>`;
+  }).join('');
+  return`<div style="overflow-x:auto"><table class="tbl">
+    <thead><tr><th>তারিখ</th><th>ধরন</th><th>পরিমাণ</th><th>প্রাপক</th><th>দাতা</th><th>দাতার উৎস</th><th>দলিল নং</th><th>বায়া দলিল</th><th>মূল্য</th><th>নামজারি</th><th>মন্তব্য</th><th class="no-print"></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+function rdDagSum(dag){
+  const byP={};
+  dag.txs.forEach(tx=>{
+    if(!tx.toP)return;
+    if(!byP[tx.toP])byP[tx.toP]={waris:0,kharid:0,heba:0,wasiyat:0,dls:[],njs:[]};
+    const b=byP[tx.toP];
+    if(tx.type==='waris')b.waris+=tx.amt;else if(tx.type==='kharid')b.kharid+=tx.amt;
+    else if(tx.type==='heba')b.heba+=tx.amt;else if(tx.type==='wasiyat')b.wasiyat+=tx.amt;
+    if(tx.dl)b.dls.push(tx.dl);if(tx.nj)b.njs.push(tx.nj);
+  });
+  const pids=Object.keys(byP);if(!pids.length)return'';
+  const sold=dagSold(dag);
+  const rows=pids.map((pid,i)=>{
+    const p=persons.find(x=>x.id==pid);const b=byP[pid];
+    const tot=(b.waris+b.kharid+b.heba+b.wasiyat).toFixed(3);
+    return`<tr><td>${i+1}</td><td><b style="color:var(--txt)">${p?p.name:'?'}</b></td>
+      <td style="font-size:11px;color:var(--txt3)">${p?p.rel:'—'}</td>
+      <td>${b.waris?`<span class="b bw">${b.waris.toFixed(3)}</span>`:'—'}</td>
+      <td>${b.kharid?`<span class="b bk">${b.kharid.toFixed(3)}</span>`:'—'}</td>
+      <td>${b.heba?`<span class="b bh">${b.heba.toFixed(3)}</span>`:'—'}</td>
+      <td>${b.wasiyat?`<span class="b bwa">${b.wasiyat.toFixed(3)}</span>`:'—'}</td>
+      <td><b style="color:var(--acc)">${tot}</b></td>
+      <td style="font-size:11px">${b.dls.join(', ')||'—'}</td>
+      <td style="font-size:11px">${b.njs.join(', ')||'—'}</td></tr>`;
+  }).join('');
+  const totAll=pids.reduce((s,pid)=>{const b=byP[pid];return s+b.waris+b.kharid+b.heba+b.wasiyat},0);
+  const unalloc=dag.total-sold-totAll;
+  return`<div style="margin-top:12px">
+    <h3>দাগ ${dag.no} — ব্যক্তি সারাংশ (মোট ${dag.total} শতক)</h3>
+    <div style="overflow-x:auto"><table class="tbl" style="margin-top:6px">
+      <thead><tr><th>#</th><th>নাম</th><th>সম্পর্ক</th><th>ওয়ারিশ</th><th>খরিদ</th><th>হেবা</th><th>ওয়াসিয়াত</th><th>মোট (শতক)</th><th>দলিল নং</th><th>নামজারি</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot>
+        <tr><td colspan="7" style="text-align:right">পারিবারিক বণ্টন →</td><td style="color:var(--grn)">${totAll.toFixed(3)}</td><td colspan="2"></td></tr>
+        ${sold?`<tr><td colspan="7" style="text-align:right">বাইরে বিক্রয় (−) →</td><td style="color:var(--red)">${sold.toFixed(3)}</td><td colspan="2"></td></tr>`:''}
+        <tr><td colspan="7" style="text-align:right">অবণ্টিত অবশিষ্ট →</td>
+          <td style="color:${unalloc<0?'var(--red)':unalloc===0?'var(--txt3)':'var(--org)'};font-weight:700">${unalloc.toFixed(3)}</td><td colspan="2"></td></tr>
+      </tfoot>
+    </table></div>
+  </div>`;
+}
+
+function toggleDag(id){aDid=aDid===id?null:id;rdDags()}
+
+/* ===== DAG MODAL ===== */
+function opDag(id){
+  eDid=id;const dag=id?dags.find(d=>d.id===id):null;
+  document.getElementById('dm-t').textContent=dag?`দাগ ${dag.no} সম্পাদনা`:'নতুন দাগ যোগ করুন';
+  document.getElementById('d-del').style.display=dag?'':'none';
+  if(dag){sv('d-no',dag.no);sv('d-mou',dag.mouza);sv('d-tha',dag.thana);sv('d-tot',dag.total);
+    document.getElementById('d-typ').value=dag.type;sv('d-cs',dag.cs);sv('d-rs',dag.rs);sv('d-bs',dag.bs);sv('d-nj',dag.nj);sv('d-nt',dag.notes);}
+  else['d-no','d-mou','d-tha','d-tot','d-cs','d-rs','d-bs','d-nj','d-nt'].forEach(k=>sv(k,''));
+  document.getElementById('mdl-dag').style.display='flex';
+}
+function saveDag(){
+  const no=gv('d-no').trim(),total=parseFloat(gv('d-tot'));
+  if(!no||!total){alert('দাগ নং ও মোট জমি আবশ্যক');return;}
+  const data={no,mouza:gv('d-mou'),thana:gv('d-tha'),total,type:gv('d-typ'),cs:gv('d-cs'),rs:gv('d-rs'),bs:gv('d-bs'),nj:gv('d-nj'),notes:gv('d-nt')};
+  if(eDid){const i=dags.findIndex(d=>d.id===eDid);dags[i]={...dags[i],...data};}
+  else dags.push({id:nDid++,...data,txs:[]});
+  CM('mdl-dag');rdDags();syncWsel();toast('✅ দাগ সংরক্ষিত');
+}
+function delDag(){if(!eDid||!confirm('দাগ ও সব এন্ট্রি মুছবেন?'))return;dags=dags.filter(d=>d.id!==eDid);CM('mdl-dag');rdDags();syncWsel();toast('🗑 দাগ মুছে গেছে')}
+
+/* ===== TX MODAL ===== */
+function opTx(dagId,txId){
+  aDid=dagId;eTid=txId;
+  const dag=dags.find(d=>d.id===dagId);
+  const tx=txId!=null?dag.txs.find(t=>t.id===txId):null;
+  document.getElementById('tx-t').textContent=`দাগ ${dag.no} — ${tx?'এন্ট্রি সম্পাদনা':'নতুন এন্ট্রি'}`;
+  document.getElementById('tx-del').style.display=tx?'':'none';
+  document.getElementById('tx-err').style.display='none';
+  const sold=dagSold(dag);
+  document.getElementById('tx-av').textContent=`দাগ ${dag.no}: মোট ${dag.total} শতক | বিক্রয়: ${sold.toFixed(3)} | উপলব্ধ: ${dagRemain(dag).toFixed(3)} শতক`;
+  const mkO=()=>'<option value="">— কেউ নেই / বাইরে —</option>'+persons.map(p=>`<option value="${p.id}">${p.name} (${p.rel})</option>`).join('');
+  document.getElementById('tx-to').innerHTML=mkO();document.getElementById('tx-frm').innerHTML=mkO();
+  if(tx){
+    document.getElementById('tx-typ').value=tx.type;sv('tx-amt',tx.amt);sv('tx-dt',tx.date);
+    document.getElementById('tx-to').value=tx.toP||'';document.getElementById('tx-frm').value=tx.frP||'';
+    sv('tx-src',tx.src);sv('tx-sdl',tx.sdl);sv('tx-snj',tx.snj);sv('tx-dl',tx.dl);sv('tx-rg',tx.rg);sv('tx-pr',tx.pr);sv('tx-nj',tx.nj);sv('tx-tax',tx.tax);sv('tx-wit',tx.wit);sv('tx-nt',tx.nt);
+  } else {
+    ['tx-amt','tx-dt','tx-src','tx-sdl','tx-snj','tx-dl','tx-rg','tx-pr','tx-nj','tx-tax','tx-wit','tx-nt'].forEach(k=>sv(k,''));
+    document.getElementById('tx-typ').value='waris';
+  }
+  txTypChg();document.getElementById('mdl-tx').style.display='flex';
+}
+function txTypChg(){
+  const t=gv('tx-typ');const isOut=t==='sale_out'||t==='heba_out';
+  document.getElementById('tx-src-blk').style.display=isOut?'none':'';
+  document.getElementById('tx-to-row').style.display=isOut?'none':'';
+}
+function saveTx(){
+  const dag=dags.find(d=>d.id===aDid);const amt=parseFloat(gv('tx-amt'));
+  if(!amt||isNaN(amt)){const e=document.getElementById('tx-err');e.style.display='';e.textContent='পরিমাণ আবশ্যক';return;}
+  const toP=gv('tx-to')?parseInt(gv('tx-to')):null;const frP=gv('tx-frm')?parseInt(gv('tx-frm')):null;
+  const data={type:gv('tx-typ'),amt,date:gv('tx-dt'),toP,frP,src:gv('tx-src'),sdl:gv('tx-sdl'),snj:gv('tx-snj'),dl:gv('tx-dl'),rg:gv('tx-rg'),pr:parseFloat(gv('tx-pr'))||0,nj:gv('tx-nj'),tax:gv('tx-tax'),wit:gv('tx-wit'),nt:gv('tx-nt')};
+  if(eTid!=null){const i=dag.txs.findIndex(t=>t.id===eTid);dag.txs[i]={...dag.txs[i],...data};}
+  else dag.txs.push({id:nTid++,...data});
+  CM('mdl-tx');rdDags();toast('✅ এন্ট্রি সংরক্ষিত');
+}
+function delTx(){if(eTid==null||!confirm('মুছবেন?'))return;const dag=dags.find(d=>d.id===aDid);dag.txs=dag.txs.filter(t=>t.id!==eTid);CM('mdl-tx');rdDags();toast('🗑 এন্ট্রি মুছে গেছে')}
+
+/* ===== PERSONS ===== */
+function rdPersons(){
+  const el=document.getElementById('person-list');
+  if(!persons.length){el.innerHTML='<div class="empty">কোনো ব্যক্তি নেই</div>';return;}
+  el.innerHTML=persons.map(p=>{
+    const par=p.parent?persons.find(x=>x.id===p.parent):null;
+    const allTxs=[];dags.forEach(dag=>dag.txs.filter(t=>t.toP===p.id).forEach(t=>allTxs.push({dag,tx:t})));
+    const tw=allTxs.filter(x=>x.tx.type==='waris').reduce((s,x)=>s+x.tx.amt,0);
+    const tk=allTxs.filter(x=>x.tx.type==='kharid').reduce((s,x)=>s+x.tx.amt,0);
+    const th=allTxs.filter(x=>x.tx.type==='heba').reduce((s,x)=>s+x.tx.amt,0);
+    const soldOut=dags.reduce((s,d)=>s+d.txs.filter(t=>t.frP===p.id&&(t.type==='sale_out'||t.type==='heba_out')).reduce((ss,t)=>ss+t.amt,0),0);
+    const total=tw+tk+th;
+    const dagNos=[...new Set(allTxs.map(x=>x.dag.no))];
+    const steps=allTxs.slice(0,4).map(x=>`<div class="step">
+      <div class="sdot" style="background:${x.tx.type==='waris'?'var(--blu)':x.tx.type==='kharid'?'var(--grn)':'var(--org)'}"></div>
+      <div class="sc">
+        <div class="st">দাগ ${x.dag.no} — ${TX_LABEL[x.tx.type]} — ${x.tx.amt.toFixed(3)} শতক</div>
+        <div class="ss">${x.tx.src||''} ${x.tx.dl?'| দলিল: '+x.tx.dl:''} ${x.tx.sdl?'| বায়া: '+x.tx.sdl:''} ${x.tx.date?'| '+x.tx.date:''}</div>
+      </div></div>`).join('');
+    return`<div class="prow" onclick="opPerson(${p.id})">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${p.name} <span class="b ${p.alive?'bj':'bd'}">${p.alive?'জীবিত':'মৃত'}</span></div>
+        <div style="font-size:11px;color:var(--txt3);margin-top:2px">${p.rel}${par?' | '+par.name:''}</div>
+        <div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:3px">
+          ${tw?`<span class="b bw">ওয়ারিশ: ${tw.toFixed(3)}</span>`:''}
+          ${tk?`<span class="b bk">খরিদ: ${tk.toFixed(3)}</span>`:''}
+          ${th?`<span class="b bh">হেবা: ${th.toFixed(3)}</span>`:''}
+          ${dagNos.length?`<span class="b ba">দাগ: ${dagNos.join(', ')}</span>`:''}
+        </div>
+        ${steps?`<div style="margin-top:8px;border-top:1px solid var(--bdr);padding-top:8px">${steps}</div>`:''}
+      </div>
+      <div style="text-align:right;flex-shrink:0;padding-left:12px">
+        <div style="font-size:17px;font-weight:700;color:var(--acc)">${total.toFixed(3)}</div>
+        <div style="font-size:10px;color:var(--txt3)">শতক</div>
+        ${soldOut?`<div style="font-size:10px;color:var(--red)">বিক্রয়: ${soldOut.toFixed(3)}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ===== PERSON MODAL ===== */
+function popPar(excl){
+  const s=document.getElementById('pm-par');
+  s.innerHTML='<option value="">— কেউ নেই (মূল) —</option>';
+  persons.filter(p=>p.id!==excl).forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`${p.name} (${p.rel})`;s.appendChild(o);});
+}
+function opPerson(id){
+  ePid=id;const p=id?persons.find(x=>x.id===id):null;
+  document.getElementById('pm-t').textContent=p?'ব্যক্তি সম্পাদনা':'নতুন ব্যক্তি যোগ করুন';
+  document.getElementById('pm-del').style.display=p?'':'none';
+  if(p){sv('pm-nm',p.name);document.getElementById('pm-rl').value=p.rel;document.getElementById('pm-alv').value=p.alive?'1':'0';sv('pm-nid',p.nid);sv('pm-ph',p.phone);}
+  else{['pm-nm','pm-nid','pm-ph'].forEach(k=>sv(k,''));document.getElementById('pm-rl').value='পুত্র';document.getElementById('pm-alv').value='1';}
+  popPar(id);if(p)document.getElementById('pm-par').value=p.parent||'';
+  document.getElementById('mdl-per').style.display='flex';
+}
+function savePerson(){
+  const name=gv('pm-nm').trim();if(!name)return;
+  const data={name,rel:gv('pm-rl'),parent:gv('pm-par')?parseInt(gv('pm-par')):null,alive:gv('pm-alv')==='1',nid:gv('pm-nid'),phone:gv('pm-ph')};
+  if(ePid){const i=persons.findIndex(p=>p.id===ePid);persons[i]={...persons[i],...data};}
+  else persons.push({id:nPid++,...data});
+  CM('mdl-per');rdPersons();syncWsel();toast('✅ ব্যক্তি সংরক্ষিত');
+}
+function delPerson(){if(!ePid||!confirm('মুছবেন?'))return;persons.filter(p=>p.parent===ePid).forEach(p=>p.parent=null);persons=persons.filter(p=>p.id!==ePid);CM('mdl-per');rdPersons();toast('🗑 ব্যক্তি মুছে গেছে')}
+
+/* ===== WARIS ===== */
+const WOPT=[
+  {k:'husband',l:'স্বামী',f:'১/২ বা ১/৪'},{k:'wife',l:'স্ত্রী',f:'১/৪ বা ১/৮'},
+  {k:'son',l:'পুত্র',f:'আসাবা'},{k:'daughter',l:'কন্যা',f:'১/২–২/৩–আসাবা'},
+  {k:'father',l:'পিতা',f:'১/৬ বা ১/৬+আসাবা'},{k:'mother',l:'মাতা',f:'১/৬ বা ১/৩'},
+  {k:'grandfather',l:'দাদা',f:'১/৬ (পিতা ছাড়া)'},{k:'grandmother',l:'দাদি/নানি',f:'১/৬'},
+  {k:'son_son',l:'পুত্রের পুত্র',f:'আসাবা (পুত্র ছাড়া)'},{k:'full_bro',l:'সহোদর ভাই',f:'আসাবা'},
+  {k:'full_sis',l:'সহোদর বোন',f:'১/২ বা ২/৩'},{k:'uterine',l:'মায়ের ভাই/বোন',f:'১/৬ বা ১/৩'},
+];
+let lastWRows=[];
+function syncWsel(){const s=document.getElementById('w-dag');const c=s.value;s.innerHTML='<option value="">— ম্যানুয়াল —</option>'+dags.map(d=>`<option value="${d.id}">দাগ ${d.no} — ${d.mouza||''} (${d.total} শতক)</option>`).join('');s.value=c}
+function initW(){
+  syncWsel();
+  if(!document.getElementById('wc-husband')){
+    document.getElementById('w-grid').innerHTML=WOPT.map(o=>`
+      <div style="display:flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--bdr);border-radius:6px;background:var(--bg2);cursor:pointer">
+        <input type="checkbox" id="wc-${o.k}" onchange="calcW()" style="width:auto;accent-color:var(--acc)">
+        <div><div style="font-size:12px;font-weight:600;color:var(--txt)">${o.l}</div>
+        <div style="font-size:10px;color:var(--txt3)">${o.f}</div></div>
+      </div>`).join('');
+  }
+  calcW();
+}
+function wFromDag(){
+  const id=gv('w-dag');if(!id){document.getElementById('w-tot').value=100;calcW();return;}
+  const dag=dags.find(d=>d.id==id);
+  if(dag){document.getElementById('w-tot').value=dagRemain(dag).toFixed(3);sv('w-mou',dag.mouza);}
+  calcW();
+}
+const hk=k=>document.getElementById('wc-'+k)?.checked;
+function calcW(){
+  const tot=parseFloat(gv('w-tot'))||0;const rows=[];let used=0;
+  const S=hk('son'),D=hk('daughter'),F=hk('father'),M=hk('mother'),SS=hk('son_son'),
+    H=hk('husband'),W=hk('wife'),FB=hk('full_bro'),FS=hk('full_sis'),
+    GF=hk('grandfather'),GM=hk('grandmother'),UT=hk('uterine');
+  if(H){const s=(S||D||SS)?tot/4:tot/2;rows.push({n:'স্বামী',s,f:(S||D||SS)?'১/৪':'১/২',k:'husband'});used+=s;}
+  if(W){const s=(S||D||SS)?tot/8:tot/4;rows.push({n:'স্ত্রী',s,f:(S||D||SS)?'১/৮':'১/৪',k:'wife'});used+=s;}
+  if(M){const s=(S||D||SS)?tot/6:(FB||FS)?tot/6:tot/3;rows.push({n:'মাতা',s,f:(S||D||SS)?'১/৬':(FB||FS)?'১/৬':'১/৩',k:'mother'});used+=s;}
+  if(GM&&!M){rows.push({n:'দাদি/নানি',s:tot/6,f:'১/৬',k:'grandmother'});used+=tot/6;}
+  if(F&&(S||D||SS)){rows.push({n:'পিতা (১/৬)',s:tot/6,f:'১/৬',k:'father'});used+=tot/6;}
+  if(D&&!S&&!SS){rows.push({n:'কন্যাগণ (২/৩)',s:tot*2/3,f:'২/৩',k:'daughter'});used+=tot*2/3;}
+  if(GF&&!F){rows.push({n:'দাদা (১/৬)',s:tot/6,f:'১/৬',k:'grandfather'});used+=tot/6;}
+  if(FS&&!S&&!D&&!SS&&!F&&!GF&&!FB){rows.push({n:'সহোদর বোন',s:tot/2,f:'১/২',k:'full_sis'});used+=tot/2;}
+  if(UT&&!S&&!D&&!SS&&!F){rows.push({n:'মায়ের ভাই/বোন',s:tot/3,f:'১/৩',k:'uterine'});used+=tot/3;}
+  const res=tot-used;
+  if(res>0.001){
+    if(S&&D){const p=res/3;rows.push({n:'পুত্র (আসাবা)',s:p*2,f:'অবশিষ্টের ২ভাগ',k:'son'});rows.push({n:'কন্যা (আসাবা)',s:p,f:'অবশিষ্টের ১ভাগ',k:'daughter'});}
+    else if(S)rows.push({n:'পুত্র (আসাবা)',s:res,f:'সম্পূর্ণ অবশিষ্ট',k:'son'});
+    else if(SS&&!S&&!D)rows.push({n:'পুত্রের পুত্র (আসাবা)',s:res,f:'অবশিষ্ট',k:'son_son'});
+    else if(FB&&!S&&!D&&!F&&!GF)rows.push({n:'সহোদর ভাই (আসাবা)',s:res,f:'অবশিষ্ট',k:'full_bro'});
+    else if(F){const fi=rows.findIndex(r=>r.k==='father');if(fi>=0){rows[fi].s+=res;rows[fi].n='পিতা (১/৬+আসাবা)';rows[fi].f='১/৬+অবশিষ্ট';}else rows.push({n:'পিতা (আসাবা)',s:res,f:'অবশিষ্ট',k:'father'});}
+    else if(GF)rows.push({n:'দাদা (আসাবা)',s:res,f:'অবশিষ্ট',k:'grandfather'});
+  }
+  lastWRows=rows.map(r=>({...r}));
+  if(!rows.length){document.getElementById('w-res').innerHTML='<div class="empty" style="color:var(--txt3)">ওয়ারিশ নির্বাচন করা হয়নি</div>';document.getElementById('w-apply-block').style.display='none';return;}
+  const ft=rows.reduce((s,r)=>s+r.s,0);
+  document.getElementById('w-res').innerHTML=`<div class="wr">
+    ${rows.map((r,i)=>`<div class="wrr">
+      <span style="color:var(--txt2)">${r.n} <small style="color:var(--txt3)">(${r.f})</small></span>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input type="number" value="${r.s.toFixed(3)}" step="0.001" style="width:90px;text-align:right;background:var(--bg4);border-color:var(--bdr2);color:var(--acc)" onchange="manualEdit(${i},this.value)">
+        <span style="color:var(--txt3);font-size:11px">শতক</span>
+      </div></div>`).join('')}
+    <div class="wrr"><span>মোট বণ্টিত</span><b style="color:var(--acc)">${ft.toFixed(3)} শতক</b></div>
+  </div>`;
+  const diff=tot-ft;const ww=document.getElementById('w-warn');
+  if(Math.abs(diff)>0.01){ww.style.display='';ww.textContent=`⚠️ ${Math.abs(diff).toFixed(3)} শতক ${diff>0?'অবণ্টিত':'অতিরিক্ত বণ্টিত'}`;}
+  else ww.style.display='none';
+  const dagId=gv('w-dag');
+  if(dagId&&rows.length){
+    document.getElementById('w-apply-block').style.display='';
+    const dag=dags.find(d=>d.id==dagId);
+    document.getElementById('w-apply-preview').innerHTML=`<div class="al ok">দাগ ${dag?.no} — ${ft.toFixed(3)} শতক, ${rows.length} জন ওয়ারিশকে বণ্টন করা হবে।</div>`;
+  } else document.getElementById('w-apply-block').style.display='none';
+}
+function manualEdit(idx,val){if(lastWRows[idx])lastWRows[idx].s=parseFloat(val)||0;const ft=lastWRows.reduce((s,r)=>s+r.s,0);const tot=parseFloat(gv('w-tot'))||0;const diff=tot-ft;const ww=document.getElementById('w-warn');if(Math.abs(diff)>0.01){ww.style.display='';ww.textContent=`⚠️ ${Math.abs(diff).toFixed(3)} শতক ${diff>0?'অবণ্টিত':'অতিরিক্ত বণ্টিত'}`;}else ww.style.display='none';}
+function applyWaris(){
+  const dagId=parseInt(gv('w-dag'));if(!dagId)return;
+  const dag=dags.find(d=>d.id===dagId);if(!dag||!lastWRows.length)return;
+  const today=new Date().toISOString().slice(0,10);
+  lastWRows.forEach(r=>{
+    const pMatch=persons.find(p=>{
+      if(r.k==='husband'&&p.rel==='স্বামী')return true;if(r.k==='wife'&&p.rel==='স্ত্রী')return true;
+      if(r.k==='son'&&p.rel==='পুত্র')return true;if(r.k==='daughter'&&p.rel==='কন্যা')return true;
+      if(r.k==='father'&&p.rel==='পিতা')return true;if(r.k==='mother'&&p.rel==='মাতা')return true;
+      return false;
+    });
+    dag.txs.push({id:nTid++,type:'waris',amt:r.s,date:today,toP:pMatch?pMatch.id:null,frP:null,src:'ওয়ারিশ হিসাব স্বয়ংক্রিয়',sdl:'',snj:'',dl:'',rg:'',pr:0,nj:'',tax:'',wit:'',nt:r.n+' — '+r.f});
+  });
+  document.getElementById('w-apply-block').style.display='none';aDid=dagId;
+  toast('✅ দাগে ওয়ারিশ এন্ট্রি হয়েছে!');G('dag');
+}
+
+/* ===== ROR ===== */
+function rdROR(){
+  const byP={};
+  dags.forEach(dag=>dag.txs.forEach(tx=>{if(!tx.toP)return;if(!byP[tx.toP])byP[tx.toP]={waris:0,kharid:0,heba:0,wasiyat:0,dags:new Set(),dls:new Set(),njs:new Set()};const b=byP[tx.toP];if(tx.type==='waris')b.waris+=tx.amt;else if(tx.type==='kharid')b.kharid+=tx.amt;else if(tx.type==='heba')b.heba+=tx.amt;else if(tx.type==='wasiyat')b.wasiyat+=tx.amt;b.dags.add(dag.no);if(tx.dl)b.dls.add(tx.dl);if(tx.nj)b.njs.add(tx.nj);}));
+  const pids=Object.keys(byP);
+  const tw=pids.reduce((s,k)=>s+byP[k].waris,0),tk=pids.reduce((s,k)=>s+byP[k].kharid,0),th=pids.reduce((s,k)=>s+byP[k].heba,0),twa=pids.reduce((s,k)=>s+byP[k].wasiyat,0),tt=tw+tk+th+twa;
+  document.getElementById('ror-stats').innerHTML=`<div class="stat"><div class="v">${persons.length}</div><div class="l">মোট সদস্য</div></div><div class="stat"><div class="v">${dags.length}</div><div class="l">মোট দাগ</div></div><div class="stat"><div class="v">${tw.toFixed(2)}</div><div class="l">ওয়ারিশ শতক</div></div><div class="stat"><div class="v">${tk.toFixed(2)}</div><div class="l">খরিদ শতক</div></div><div class="stat"><div class="v">${tt.toFixed(2)}</div><div class="l">সর্বমোট শতক</div></div>`;
+  const body=document.getElementById('ror-body');
+  if(!pids.length){body.innerHTML='<tr><td colspan="15" class="empty">কোনো তথ্য নেই</td></tr>';return;}
+  body.innerHTML=pids.map((pid,i)=>{const p=persons.find(x=>x.id==pid);if(!p)return'';const b=byP[pid];const par=p.parent?persons.find(x=>x.id===p.parent):null;const tot=(b.waris+b.kharid+b.heba+b.wasiyat).toFixed(3);const dagArr=[...b.dags];const mouza=dags.find(d=>d.no===dagArr[0])?.mouza||'—';const dtyp=dags.find(d=>d.no===dagArr[0])?.type||'—';
+    return`<tr><td style="text-align:center">${i+1}</td><td><b style="color:var(--txt)">${p.name}</b></td><td style="font-size:11px;color:var(--txt3)">${par?par.name:'—'}</td><td style="font-size:11px">${p.rel}</td><td style="font-size:11px">${dagArr.join(', ')||'—'}</td><td style="font-size:11px;color:var(--txt3)">${mouza}</td><td style="font-size:11px;color:var(--txt3)">${dtyp}</td><td>${b.waris?`<span class="b bw">${b.waris.toFixed(3)}</span>`:'—'}</td><td>${b.kharid?`<span class="b bk">${b.kharid.toFixed(3)}</span>`:'—'}</td><td>${b.heba?`<span class="b bh">${b.heba.toFixed(3)}</span>`:'—'}</td><td>${b.wasiyat?`<span class="b bwa">${b.wasiyat.toFixed(3)}</span>`:'—'}</td><td><b style="color:var(--acc)">${parseFloat(tot)>0?tot:'—'}</b></td><td style="font-size:11px">${[...b.dls].join(', ')||'—'}</td><td style="font-size:11px">${[...b.njs].join(', ')||'—'}</td><td><span class="b ${p.alive?'bj':'bd'}">${p.alive?'জীবিত':'মৃত'}</span></td></tr>`;
+  }).join('');
+  document.getElementById('ror-foot').innerHTML=`<tr><td colspan="7" style="text-align:right">মোট →</td><td><span class="b bw">${tw.toFixed(2)}</span></td><td><span class="b bk">${tk.toFixed(2)}</span></td><td><span class="b bh">${th.toFixed(2)}</span></td><td><span class="b bwa">${twa.toFixed(2)}</span></td><td><b style="color:var(--acc)">${tt.toFixed(2)}</b></td><td colspan="3"></td></tr>`;
+}
+
+/* ===== TREE ===== */
+const RCOL={'পিতা':'#8b5cf6','মাতা':'#ec4899','স্বামী':'#3b82f6','স্ত্রী':'#db2777','পুত্র':'#10b981','কন্যা':'#f59e0b','ভাই':'#3b82f6','বোন':'#be185d','দাদা':'#7c3aed','দাদি':'#9d174d','নাতি (পুত্রের পুত্র)':'#0d9488','def':'#6b7280'};
+function ch(pid){return persons.filter(p=>p.parent===pid)}
+function drawTree(){
+  const svg=document.getElementById('tree-svg');
+  const BW=126,BH=72,HG=12,VG=76;const pos={};let xC=30;
+  function lay(id,d){const cs=ch(id);if(!cs.length){pos[id]={x:xC,y:d*(BH+VG)};xC+=BW+HG;return;}
+    const sx=xC;cs.forEach(c=>lay(c.id,d+1));pos[id]={x:Math.max(30,(sx+xC-HG)/2-BW/2),y:d*(BH+VG)};}
+  persons.filter(p=>p.parent===null).forEach(r=>lay(r.id,0));
+  const W=Math.max(900,Math.max(...Object.values(pos).map(p=>p.x+BW),0)+60);
+  const H=Math.max(460,Math.max(...Object.values(pos).map(p=>p.y+BH),0)+80);
+  svg.setAttribute('width',W);svg.setAttribute('height',H);
+  const landByP={};dags.forEach(dag=>dag.txs.forEach(tx=>{if(!tx.toP)return;if(tx.type!=='sale_out'&&tx.type!=='heba_out')landByP[tx.toP]=(landByP[tx.toP]||0)+tx.amt;}));
+  let h=`<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#2d3748" stroke-width="1.5" stroke-linecap="round"/></marker></defs>`;
+  persons.forEach(p=>{if(!p.parent||!pos[p.parent]||!pos[p.id])return;const pp=pos[p.parent],cp=pos[p.id];const px=pp.x+BW/2,py=pp.y+BH,cx=cp.x+BW/2,cy=cp.y,my=(py+cy)/2;h+=`<path d="M${px},${py}L${px},${my}L${cx},${my}L${cx},${cy}" fill="none" stroke="#2d3748" stroke-width="1.5" marker-end="url(#arr)"/>`;});
+  persons.forEach(p=>{const pp=pos[p.id];if(!pp)return;const col=RCOL[p.rel]||RCOL.def;const op=p.alive?1:.62;const land=landByP[p.id]||0;const nm=p.name.length>9?p.name.slice(0,9)+'…':p.name;const dagNos=[...new Set(dags.filter(d=>d.txs.some(t=>t.toP===p.id)).map(d=>d.no))];
+    h+=`<g style="cursor:pointer;opacity:${op}" onclick="opPerson(${p.id})"><rect x="${pp.x}" y="${pp.y}" width="${BW}" height="${BH}" rx="8" fill="${col}1a" stroke="${col}" stroke-width="${p.alive?1.5:.7}"/>${!p.alive?`<line x1="${pp.x+6}" y1="${pp.y+6}" x2="${pp.x+BW-6}" y2="${pp.y+BH-6}" stroke="${col}" stroke-width=".7" opacity=".4"/><line x1="${pp.x+BW-6}" y1="${pp.y+6}" x2="${pp.x+6}" y2="${pp.y+BH-6}" stroke="${col}" stroke-width=".7" opacity=".4"/>`:``}<text font-size="11" font-weight="700" fill="${col}" x="${pp.x+BW/2}" y="${pp.y+16}" text-anchor="middle" dominant-baseline="central">${nm}</text><text font-size="9" fill="${col}cc" x="${pp.x+BW/2}" y="${pp.y+30}" text-anchor="middle" dominant-baseline="central">${p.rel} ${p.alive?'✓':'✗'}</text><text font-size="9" fill="#9ca3af" x="${pp.x+BW/2}" y="${pp.y+44}" text-anchor="middle" dominant-baseline="central">${land>0?land.toFixed(2)+' শতক':'—'}</text><text font-size="8" fill="#6b7280" x="${pp.x+BW/2}" y="${pp.y+60}" text-anchor="middle" dominant-baseline="central">${dagNos.length?'দাগ: '+dagNos.join(', '):''}</text></g>`;});
+  if(!persons.length)h+=`<text font-size="13" fill="#6b7280" x="450" y="230" text-anchor="middle">+ প্রথম সদস্য যোগ করুন</text>`;
+  svg.innerHTML=h;
+}
+
+/* ===== LAW ===== */
+function rdLaw(){
+  const LAWS=[
+    {t:'State Acquisition & Tenancy Act, 1950',b:'SA Act',p:'ভূমি মালিকানার মূল আইন।',l:['§৮৬ — উত্তরাধিকার (মুসলিম আইন)','§৯০ — প্রজাস্বত্ব হস্তান্তর','§৯৬ — খাস জমি বন্দোবস্ত','§১০৩ — অধিগ্রহণ']},
+    {t:'Muslim Personal Law (Shariat) Application Act, 1937',b:'Shariat',p:'হানাফি মাজহাব: পুত্র ২ভাগ, কন্যা ১ভাগ; স্ত্রী ১/৮ বা ১/৪; মাতা ১/৬ বা ১/৩।',l:['§২ — উত্তরাধিকার, হেবা, ওয়াসিয়াত শরিয়াহ দ্বারা']},
+    {t:'Transfer of Property Act, 1882',b:'TP Act',p:'সম্পত্তি হস্তান্তরের মূল আইন।',l:['§৫৪ — বিক্রয়','§৫৮ — বন্ধক','§১০৫ — ইজারা','§১২২ — হেবা/দান','§১০০ — দায়ভার']},
+    {t:'Registration Act, 1908',b:'Reg Act',p:'দলিল নিবন্ধন আইন।',l:['§১৭ — বাধ্যতামূলক নিবন্ধন','§৪৯ — অনিবন্ধিত দলিল অগ্রহণযোগ্য']},
+    {t:'Limitation Act, 1908',b:'Limitation',p:'মামলার সময়সীমা।',l:['Art.142 — দখল পুনরুদ্ধার: ১২ বছর','Art.120 — ঘোষণামূলক: ৩ বছর']},
+    {t:'Specific Relief Act, 1877',b:'SR Act',p:'নির্দিষ্ট প্রতিকার।',l:['§৯ — দখল পুনরুদ্ধার','§১২ — Specific Performance','§৪২ — ঘোষণামূলক ডিক্রি']},
+  ];
+  document.getElementById('law-wrap').innerHTML=LAWS.map(l=>`<div class="law-item"><h4>${l.t} <span class="b ba">${l.b}</span></h4><p>${l.p}</p><ul>${l.l.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('');
+}
+
+/* ===== CHECKLIST ===== */
+const CLS_DATA=[
+  {c:'📁 দলিল যাচাই',i:['মূল দলিল ও সার্টিফাইড কপি','বায়া দলিল (Chain of Title) যাচাই','সাব-রেজিস্ট্রি থেকে সার্টিফাইড কপি','সাক্ষীর পরিচয় যাচাই','স্ট্যাম্প ডিউটি পরিশোধ']},
+  {c:'🗺 খতিয়ান ও দাগ',i:['CS, RS, BS খতিয়ান সংগ্রহ','মাঠ পর্চা সংগ্রহ','দাগ নম্বর মিলানো','তফসিল যাচাই','মৌজা ম্যাপ সংগ্রহ']},
+  {c:'📝 নামজারি ও খাজনা',i:['নামজারি আদেশের কপি','ভূমি উন্নয়ন কর রশিদ (DCR)','হোল্ডিং নম্বর নিশ্চিত','ই-নামজারি পোর্টালে যাচাই']},
+  {c:'👥 ওয়ারিশ সনদ',i:['ওয়ারিশ সনদ (ইউনিয়ন পরিষদ)','মৃত ব্যক্তির মৃত্যু সনদ','সকল ওয়ারিশের NID','কাবিননামা/তালাকনামা (প্রয়োজনে)']},
+  {c:'⚖️ আদালত ও বিরোধ',i:['মামলা আছে কিনা যাচাই','নিষেধাজ্ঞা আছে কিনা','অধিগ্রহণ নোটিশ আছে কিনা','Limitation-এর সময়সীমা যাচাই']},
+];
+function rdCL(){
+  let d=0,t=0;
+  document.getElementById('cl-wrap').innerHTML=CLS_DATA.map((cat,ci)=>`<div style="margin-bottom:12px">
+    <h3>${cat.c}</h3>
+    ${cat.i.map((item,ii)=>{const k=`${ci}-${ii}`;const c=!!clS[k];if(c)d++;t++;
+      return`<div class="cli"><input type="checkbox" ${c?'checked':''} onchange="clS['${k}']=this.checked;rdCL()">
+        <span class="cll ${c?'dn':''}">${item}</span></div>`;}).join('')}
+  </div>`).join('');
+  document.getElementById('cl-d').textContent=d;document.getElementById('cl-t').textContent=t;document.getElementById('cl-p').textContent=t?Math.round(d/t*100)+'%':'0%';
+}
+
+/* Boot */
+document.getElementById('pw-date').textContent=new Date().toLocaleDateString('bn-BD');
+rdDags();syncWsel();
+</script>
+</body>
+</html>
